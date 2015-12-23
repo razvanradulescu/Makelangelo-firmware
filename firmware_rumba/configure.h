@@ -125,19 +125,21 @@
 #endif
 
 #if MOTHERBOARD == BOARD_RAMPS
-#define MOTOR_0_DIR_PIN           (55)
 #define MOTOR_0_STEP_PIN          (54)
+#define MOTOR_0_DIR_PIN           (55)
 #define MOTOR_0_ENABLE_PIN        (38)
 #define MOTOR_0_LIMIT_SWITCH_PIN  (3)
 
-#define MOTOR_1_DIR_PIN           (60)
-#define MOTOR_1_STEP_PIN          (61)
+#define MOTOR_1_STEP_PIN          (60)
+#define MOTOR_1_DIR_PIN           (61)
 #define MOTOR_1_ENABLE_PIN        (56)
 #define MOTOR_1_LIMIT_SWITCH_PIN  (14)
 
-#define NUM_SERVOS                (2)
+#define NUM_SERVOS                (4)
 #define SERVO0_PIN                (11)
 #define SERVO1_PIN                (6)
+#define SERVO2_PIN                (5)
+#define SERVO3_PIN                (4)
 #define PUMP_PIN                  (10)
 
 #endif
