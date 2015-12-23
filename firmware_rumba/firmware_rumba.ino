@@ -131,21 +131,21 @@ void printFeedRate() {
 // Inverse Kinematics - turns XY coordinates into lengths L1,L2
 void IK(float x, float y, long &l1, long &l2) {
 #ifdef COREXY
-  l1 = floor((x+y) / THREAD_PER_STEP);
-  l2 = floor((x-y) / THREAD_PER_STEP);
+  l1 = lround((x+y) / THREAD_PER_STEP);
+  l2 = lround((x-y) / THREAD_PER_STEP);
 #endif
 #ifdef TRADITIONALXY
-  l1 = floor((x) / THREAD_PER_STEP);
-  l2 = floor((y) / THREAD_PER_STEP);
+  l1 = lround((x) / THREAD_PER_STEP);
+  l2 = lround((y) / THREAD_PER_STEP);
 #endif
 #ifdef POLARGRAPH2
   // find length to M1
   float dy = y - limit_top;
   float dx = x - limit_left;
-  l1 = floor( sqrt(dx*dx+dy*dy) / THREAD_PER_STEP );
+  l1 = lround( sqrt(dx*dx+dy*dy) / THREAD_PER_STEP );
   // find length to M2
   dx = limit_right - x;
-  l2 = floor( sqrt(dx*dx+dy*dy) / THREAD_PER_STEP );
+  l2 = lround( sqrt(dx*dx+dy*dy) / THREAD_PER_STEP );
 #endif
 }
 
@@ -263,6 +263,11 @@ void test_kinematics(float x,float y) {
 void polargraph_line(float x,float y,float z,float new_feed_rate) {
   long l1,l2;
   IK(x,y,l1,l2);
+  // x and y might request a position ever so slightly different
+  // than the actual position the motor can reach (more decimal places).
+  // round off x and y to the actual motor step so that position does not
+  // drift over time.
+  FK(l1,l2,x,y);
   posx=x;
   posy=y;
   posz=z;
@@ -538,6 +543,38 @@ float parsenumber(char code,float val) {
 }
 
 
+void parseMoveServo() {
+  Serial.print(F("Move servo "));
+  int servoID = (int)parsenumber('P',-1);
+  int servoAngle = (int)parsenumber('S',-1);
+  Serial.print(servoID);
+  Serial.print(F(" to "));
+  Serial.println(servoAngle);
+  
+  if(servoID==-1 || servoAngle==-1) return;  // required value missing.
+  if(servoID <0 || servoID >= NUM_SERVOS ) return;  // invalid
+  if(servoAngle < 0 || servoAngle > 180 ) return;  // invalid
+
+  Serial.println(F("Move servo OK"));
+
+  servos[servoID].write(servoAngle);
+}
+
+
+void parsePump() {
+  Serial.print(F("PUMP "));
+  int mode = parsenumber('S',-1);
+  Serial.println(mode);
+  if( mode == -1 ) return;  // required value missing
+  switch(mode) {
+  case 0:  digitalWrite(PUMP_PIN,LOW);  break;
+  case 1:  digitalWrite(PUMP_PIN,HIGH);  break;
+  default:  break;  // invalid, do nothing.  
+  }
+  Serial.println(F("PUMP OK"));
+}
+
+
 /**
  * process commands in the serial receive buffer
  */
@@ -594,6 +631,8 @@ void processCommand() {
   case 101:  processConfig();  break;
   case 110:  line_number = parsenumber('N',line_number);  break;
   case 114:  where();  break;
+  case 280:  parseMoveServo();  break;
+  case 290:  parsePump();  break;
   }
 
   cmd=parsenumber('G',-1);

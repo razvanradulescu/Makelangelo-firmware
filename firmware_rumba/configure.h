@@ -17,8 +17,8 @@
 //#define USE_LIMIT_SWITCH  (1)  // Comment out this line to disable findHome and limit switches
 
 // machine style
-#define POLARGRAPH2  // uncomment this line if you use a polargraph like the Makelangelo
-//#define COREXY  // uncomment this line if you use a CoreXY setup.
+//#define POLARGRAPH2  // uncomment this line if you use a polargraph like the Makelangelo
+#define COREXY  // uncomment this line if you use a CoreXY setup.
 //#define TRADITIONALXY  // uncomment this line if you use a traditional XY setup.
 
 
@@ -32,7 +32,7 @@
 
 
 #define MICROSTEPS           (16.0)  // microstepping on this microcontroller
-#define STEPS_PER_TURN       (400 * MICROSTEPS)  // default number of steps per turn * microsteps
+#define STEPS_PER_TURN       (400.0 * MICROSTEPS)  // default number of steps per turn * microsteps
 
 #define MAX_FEEDRATE         (30000.0)  // depends on timer interrupt & hardware
 #define MIN_FEEDRATE         (1000)
@@ -82,12 +82,15 @@
 #define encrot3            1
 
 
+#define BOARD_RUMBA 1
+#define BOARD_RAMPS 2
+#define BOARD_SANGUINOLULU 3
 
-#define MOTHERBOARD 1 // RUMBA
-//#define MOTHERBOARD 2 // RAMPS
-//#define MOTHERBOARD 3 // SANGUINOLOLU
+//#define MOTHERBOARD BOARD_RUMBA
+#define MOTHERBOARD BOARD_RAMPS
+//#define MOTHERBOARD BOARD_SANGUINOLULU
 
-#if MOTHERBOARD == 1
+#if MOTHERBOARD == BOARD_RUMBA
 #define MOTOR_0_DIR_PIN           (16)
 #define MOTOR_0_STEP_PIN          (17)
 #define MOTOR_0_ENABLE_PIN        (48)
@@ -119,16 +122,27 @@
 #define MOTOR_5_ENABLE_PIN        (39)
 #define MOTOR_5_LIMIT_SWITCH_PIN  (32)
 
-#define NUM_SERVOS         (1)
-#define SERVO0_PIN         (5)
-#define SERVO1_PIN         (4)
+#endif
+
+#if MOTHERBOARD == BOARD_RAMPS
+#define MOTOR_0_DIR_PIN           (55)
+#define MOTOR_0_STEP_PIN          (54)
+#define MOTOR_0_ENABLE_PIN        (38)
+#define MOTOR_0_LIMIT_SWITCH_PIN  (3)
+
+#define MOTOR_1_DIR_PIN           (60)
+#define MOTOR_1_STEP_PIN          (61)
+#define MOTOR_1_ENABLE_PIN        (56)
+#define MOTOR_1_LIMIT_SWITCH_PIN  (14)
+
+#define NUM_SERVOS                (2)
+#define SERVO0_PIN                (11)
+#define SERVO1_PIN                (6)
+#define PUMP_PIN                  (10)
 
 #endif
 
-#if MOTHERBOARD == 2
-#endif
-
-#if MOTHERBOARD == 3
+#if MOTHERBOARD == BOARD_SANGUINOLULU
 #define MOTOR_0_DIR_PIN           (21)
 #define MOTOR_0_STEP_PIN          (15)
 #define MOTOR_0_ENABLE_PIN        (14)
@@ -213,6 +227,11 @@ typedef struct {
 } Segment;
 
 
+//------------------------------------------------------------------------------
+// INCLUDES
+//------------------------------------------------------------------------------
+#include "MServo.h"
+
 
 //------------------------------------------------------------------------------
 // GLOBALS
@@ -224,6 +243,6 @@ extern volatile int current_segment;
 extern volatile int last_segment;
 extern float acceleration;
 extern Motor motors[NUM_AXIES];
-
+extern Servo servos[NUM_SERVOS];
 
 #endif // CONFIGURE_H
