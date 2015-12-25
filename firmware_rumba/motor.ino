@@ -109,18 +109,23 @@ void motor_setup() {
 
   // setup servos
 #if NUM_SERVOS>0
+  //Serial.println(F("Attaching Servo 0"));
   servos[0].attach(SERVO0_PIN);
 #endif
 #if NUM_SERVOS>1
+  //Serial.println(F("Attaching Servo 1"));
   servos[1].attach(SERVO1_PIN);
 #endif
 #if NUM_SERVOS>2
+  //Serial.println(F("Attaching Servo 2"));
   servos[2].attach(SERVO2_PIN);
 #endif
 #if NUM_SERVOS>3
+  //Serial.println(F("Attaching Servo 3"));
   servos[3].attach(SERVO3_PIN);
 #endif
 #if NUM_SERVOS>4
+  //Serial.println(F("Attaching Servo 4"));
   servos[4].attach(SERVO4_PIN);
 #endif
 

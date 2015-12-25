@@ -553,7 +553,7 @@ void parseMoveServo() {
   
   if(servoID==-1 || servoAngle==-1) return;  // required value missing.
   if(servoID <0 || servoID >= NUM_SERVOS ) return;  // invalid
-  if(servoAngle < 0 || servoAngle > 180 ) return;  // invalid
+  if(servoAngle < 0 || servoAngle > 255 ) return;  // invalid
 
   Serial.println(F("Move servo OK"));
 
