@@ -122,12 +122,16 @@
 #define MOTOR_5_ENABLE_PIN        (39)
 #define MOTOR_5_LIMIT_SWITCH_PIN  (32)
 
+#define NUM_SERVOS                (1)
+#define SERVO0_PIN                (6)
+
 #endif
 
 #if MOTHERBOARD == BOARD_RAMPS
-#define MOTOR_0_STEP_PIN          (54)
-#define MOTOR_0_DIR_PIN           (55)
-#define MOTOR_0_ENABLE_PIN        (38)
+// motor 0 on extruder 0 because my ramps board has a wonky X axis
+#define MOTOR_0_STEP_PIN          26 //(54)
+#define MOTOR_0_DIR_PIN           28 //(55)
+#define MOTOR_0_ENABLE_PIN        24 //(38)
 #define MOTOR_0_LIMIT_SWITCH_PIN  (3)
 
 #define MOTOR_1_STEP_PIN          (60)

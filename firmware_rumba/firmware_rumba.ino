@@ -147,6 +147,12 @@ void IK(float x, float y, long &l1, long &l2) {
   dx = limit_right - x;
   l2 = lround( sqrt(dx*dx+dy*dy) / THREAD_PER_STEP );
 #endif
+/*
+  Serial.print("L1=");
+  Serial.print(l1);
+  Serial.print(" L2=");
+  Serial.println(l2);
+*/
 }
 
 
@@ -267,7 +273,7 @@ void polargraph_line(float x,float y,float z,float new_feed_rate) {
   // than the actual position the motor can reach (more decimal places).
   // round off x and y to the actual motor step so that position does not
   // drift over time.
-  FK(l1,l2,x,y);
+  //FK(l1,l2,x,y);
   posx=x;
   posy=y;
   posz=z;
@@ -562,6 +568,7 @@ void parseMoveServo() {
 
 
 void parsePump() {
+#if MOTHERBOARD == BOARD_RAMPS
   Serial.print(F("PUMP "));
   int mode = parsenumber('S',-1);
   Serial.println(mode);
@@ -572,6 +579,7 @@ void parsePump() {
   default:  break;  // invalid, do nothing.  
   }
   Serial.println(F("PUMP OK"));
+#endif
 }
 
 
@@ -741,7 +749,7 @@ void processCommand() {
  */
 void ready() {
   sofar=0;  // clear input buffer
-  Serial.print(F("\n> "));  // signal ready to receive input
+  Serial.println(F("> "));  // signal ready to receive input
   last_cmd_time = millis();
 }
 

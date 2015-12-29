@@ -1040,7 +1040,7 @@ void processCommand() {
  */
 void ready() {
   sofar=0;  // clear input buffer
-  Serial.print(F("\n> "));  // signal ready to receive input
+  Serial.println(F("> "));  // signal ready to receive input
   last_cmd_time = millis();
 }
 
