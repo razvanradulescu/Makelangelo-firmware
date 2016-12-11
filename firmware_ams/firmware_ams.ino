@@ -19,8 +19,8 @@
 //------------------------------------------------------------------------------
 // CONSTANTS
 //------------------------------------------------------------------------------
-#define MOTHERBOARD 1  // Adafruit Motor Shield 1
-//#define MOTHERBOARD 2  // Adafruit Motor Shield 2
+//#define MOTHERBOARD 1  // Adafruit Motor Shield 1
+#define MOTHERBOARD 2  // Adafruit Motor Shield 2
 
 #if MOTHERBOARD == 2
 // stacked motor shields have different addresses. The default is 0x60
