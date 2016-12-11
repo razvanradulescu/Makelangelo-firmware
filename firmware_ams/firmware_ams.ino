@@ -70,7 +70,7 @@
 
 // servo angles for pen control
 #define PEN_UP_ANGLE    (90)
-#define PEN_DOWN_ANGLE  (10)  // Some servos don't like 0 degrees
+#define PEN_DOWN_ANGLE  (20)  // Some servos don't like 0 degrees
 #define PEN_DELAY       (250)  // in ms
 
 // NEMA17 are 200 steps (1.8 degrees) per turn.  If a spool is 0.8 diameter
