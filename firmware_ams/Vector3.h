@@ -1,3 +1,5 @@
+#include <Adafruit_MotorShield.h>
+
 #ifndef VECTOR3_H
 #define VECTOR3_H
 //------------------------------------------------------------------------------

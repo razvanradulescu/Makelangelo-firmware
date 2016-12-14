@@ -34,7 +34,7 @@
 //#define TRADITIONALXY  // uncomment this line if you use a traditional XY setup.
 
 // Increase this number to see more output
-#define VERBOSE         (0)
+#define VERBOSE         (4)
 
 // Comment out this line to disable SD cards.
 //#define USE_SD_CARD       (1)
@@ -43,8 +43,8 @@
 
 
 // which motor is on which pin?
-#define M1_PIN          (1)
-#define M2_PIN          (2)
+#define M1_PIN          (2)
+#define M2_PIN          (1)
 
 // which limit switch is on which pin?
 #define L_PIN           (3)
@@ -69,8 +69,8 @@
 #define SWITCH_HALF     (512)
 
 // servo angles for pen control
-#define PEN_UP_ANGLE    (20)
-#define PEN_DOWN_ANGLE  (70)  // Some servos don't like 0 degrees
+#define PEN_UP_ANGLE    (70)
+#define PEN_DOWN_ANGLE  (20)  // Some servos don't like 0 degrees
 #define PEN_DELAY       (250)  // in ms
 
 // NEMA17 are 200 steps (1.8 degrees) per turn.  If a spool is 0.8 diameter
@@ -317,11 +317,12 @@ void printFeedRate() {
 // Change pen state.
 void setPenAngle(int pen_angle) {
   if(posz!=pen_angle) {
+    posz=pen_angle;
 #if VERBOSE > 1
     Serial.print(F("pen_angle="));  Serial.println(pen_angle);
+    Serial.print(F("posz="));  Serial.println(posz);
 #endif
-    posz=pen_angle;
-
+    
     if(posz<PEN_DOWN_ANGLE) posz=PEN_DOWN_ANGLE;
     if(posz>PEN_UP_ANGLE  ) posz=PEN_UP_ANGLE;
 
